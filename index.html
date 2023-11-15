@@ -10,7 +10,25 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="employee-cards">
+        <div class="card">
+            <h3>Meli Wren</h3>
+            <p>Status: <span class="status">Clocked Out</span></p>
+            <p>Total Hours: <span class="hours">0</span></p>
+        </div>
+        <div class="card">
+            <h3>Vincent Wren</h3>
+            <p>Status: <span class="status">Clocked In</span></p>
+            <p>Total Hours: <span class="hours">8</span></p>
+        </div>
+        <div class="card">
+            <h3>Caroline Wren</h3>
+            <p>Status: <span class="status">Clocked In</span></p>
+            <p>Total Hours: <span class="hours">8</span></p>
+        </div>
+    </div>
+<div class="right-container">
+    <div class="input">
         <h1>Hour Tracking App</h1>
         <form id="timeTrackingForm">
             <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
@@ -19,13 +37,13 @@
             <button type="button" id="clockOut">Clock Out</button>
         </form>
     </div>
-
     <div class="log">
         <h2>Log</h2>
         <div class="log-entries" id="logEntries">
             <!-- Log entries will be added here -->
         </div>
     </div>
+</div>
 
 
     <script>
