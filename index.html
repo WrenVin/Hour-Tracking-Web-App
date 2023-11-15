@@ -5,42 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hour Tracking App</title>
-    <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: space-around;
-            padding: 20px;
-        }
-
-        .container,
-        .log {
-            width: 40%;
-            margin: auto;
-            text-align: center;
-        }
-
-        input,
-        button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            box-sizing: border-box;
-        }
-
-        .log {
-            border: 1px solid #ddd;
-            padding: 10px;
-            max-height: 300px;
-            /* Adjust the height as needed */
-        }
-
-        .log-entry {
-            border-bottom: 1px solid #eee;
-            padding: 5px;
-        }
-    </style>
+        <link rel="stylesheet" href="style.css">
+</head>
 </head>
 
 <body>
@@ -55,11 +21,12 @@
     </div>
 
     <div class="log">
-        <h2>Recent Actions</h2>
-        <div id="logEntries">
+        <h2>Log</h2>
+        <div class="log-entries" id="logEntries">
             <!-- Log entries will be added here -->
         </div>
     </div>
+
 
     <script>
         function addLogEntry(action, firstName, lastName) {
