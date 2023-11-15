@@ -9,13 +9,16 @@
         /* Add your CSS styles here */
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
+            display: flex;
+            justify-content: space-around;
             padding: 20px;
         }
 
-        .container {
-            width: 300px;
+        .container,
+        .log {
+            width: 40%;
             margin: auto;
+            text-align: center;
         }
 
         input,
@@ -24,6 +27,18 @@
             padding: 10px;
             margin: 10px 0;
             box-sizing: border-box;
+        }
+
+        .log {
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 300px;
+            /* Adjust the height as needed */
+        }
+
+        .log-entry {
+            border-bottom: 1px solid #eee;
+            padding: 5px;
         }
     </style>
 </head>
@@ -39,14 +54,42 @@
         </form>
     </div>
 
+    <div class="log">
+        <h2>Recent Actions</h2>
+        <div id="logEntries">
+            <!-- Log entries will be added here -->
+        </div>
+    </div>
+
     <script>
-        // Add your JavaScript here
+        function addLogEntry(action, firstName, lastName) {
+            const logEntries = document.getElementById('logEntries');
+            const newEntry = document.createElement('div');
+            newEntry.classList.add('log-entry');
+            newEntry.textContent = `${new Date().toLocaleString()} - ${firstName} ${lastName} ${action}`;
+
+            // Prepend the new entry to the log
+            logEntries.insertBefore(newEntry, logEntries.firstChild);
+
+            // Keep only a fixed number of log entries
+            const maxEntries = 25; // Change this number to show more or less entries
+            while (logEntries.children.length > maxEntries) {
+                logEntries.removeChild(logEntries.lastChild);
+            }
+        }
+
         document.getElementById('clockIn').addEventListener('click', function () {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
             // Implement Clock In logic
+            addLogEntry('clocked in', firstName, lastName);
         });
 
         document.getElementById('clockOut').addEventListener('click', function () {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
             // Implement Clock Out logic
+            addLogEntry('clocked out', firstName, lastName);
         });
     </script>
 </body>
