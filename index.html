@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hour Tracking App</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 300px;
+            margin: auto;
+        }
+
+        input,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Hour Tracking App</h1>
+        <form id="timeTrackingForm">
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+            <button type="button" id="clockIn">Clock In</button>
+            <button type="button" id="clockOut">Clock Out</button>
+        </form>
+    </div>
+
+    <script>
+        // Add your JavaScript here
+        document.getElementById('clockIn').addEventListener('click', function () {
+            // Implement Clock In logic
+        });
+
+        document.getElementById('clockOut').addEventListener('click', function () {
+            // Implement Clock Out logic
+        });
+    </script>
+</body>
+
+</html>
