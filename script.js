@@ -2,7 +2,13 @@ function addLogEntry(action, firstName, lastName) {
             const logEntries = document.getElementById('logEntries');
             const newEntry = document.createElement('div');
             newEntry.classList.add('log-entry');
-            newEntry.textContent = `${new Date().toLocaleString()} - ${firstName} ${lastName} ${action}`;
+    if (action === 'error') {
+        newEntry.textContent = 'Error: User not found';
+        newEntry.style.color = 'red';
+    }
+    else {
+        newEntry.textContent = `${new Date().toLocaleString()} - ${firstName} ${lastName} ${action}`;
+    }
 
             // Prepend the new entry to the log
             logEntries.insertBefore(newEntry, logEntries.firstChild);
