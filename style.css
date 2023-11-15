@@ -107,6 +107,10 @@ button:active {
     color: #666;
     margin: 2px;
 }
+.clocked-in {
+    background-color: rgb(28, 239, 28);
+    /* You can choose a different color if you prefer */
+}
 
 @media screen and (max-width: 768px) {
     body {

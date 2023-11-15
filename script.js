@@ -12,18 +12,43 @@ function addLogEntry(action, firstName, lastName) {
             while (logEntries.children.length > maxEntries) {
                 logEntries.removeChild(logEntries.lastChild);
             }
+}
+        
+function updateEmployeeStatus(firstName, lastName, action) {
+    const cards = document.querySelectorAll('.card');
+    let userFound = false;
+
+    cards.forEach(card => {
+        const name = card.querySelector('h3').textContent;
+        if (name === `${firstName} ${lastName}`) {
+            userFound = true;
+            if (action === 'clocked in') {
+                card.classList.add('clocked-in');
+                addLogEntry('clocked in', firstName, lastName);
+            } else {
+                card.classList.remove('clocked-in');
+                addLogEntry('clocked out', firstName, lastName);
+            }
         }
+    });
+
+    if (!userFound) {
+        addLogEntry('error', `User not found: ${firstName} ${lastName}`);
+    }
+}
+
 
 document.getElementById('clockIn').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
-    // Implement Clock In logic
-    addLogEntry('clocked in', firstName, lastName);
+    updateEmployeeStatus(firstName, lastName, 'clocked in');
+    //addLogEntry('clocked in', firstName, lastName);
 });
 
 document.getElementById('clockOut').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
-    // Implement Clock Out logic
-    addLogEntry('clocked out', firstName, lastName);
+    updateEmployeeStatus(firstName, lastName, 'clocked out');
+    //addLogEntry('clocked out', firstName, lastName);
 });
+
