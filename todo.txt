@@ -1,24 +1,7 @@
-Your hour tracking web app is a great project idea, and you're on the right track considering the integration with Google Sheets for data storage and visualization. Here's a step-by-step approach you can take:
+Current state of program: 
+The frontend UI is complete for now
+We are successfully able to pull names and data from google sheets and create cards for each person
 
-1. **Frontend Development (HTML & CSS):**
-   - Design your web page with HTML, creating forms for users to input their first and last names, and buttons for clocking in and out.
-   - Use CSS for styling the page to make it user-friendly and visually appealing.
-
-2. **JavaScript for Frontend Logic:**
-   - Use JavaScript to handle user interactions, such as clicking the clock in/out buttons.
-   - Implement the logic to round the time to the nearest 5 minutes in JavaScript.
-
-follow this : https://developers.google.com/sheets/api/quickstart/js to integrate google sheet with javascript
-
-
-3. **Backend Integration with Google Sheets (Sheets API):**
-   - Use the Google Sheets API to create a new Google Sheet and set up the columns for storing user data.
-   - Use the API to add new rows to the Google Sheet whenever a user clocks in or out.
-
-5. **Connecting Frontend with Sheets:**
-   - Use JavaScript to send user input data to the Google Sheet.
-   - Use JavaScript to retrieve data from the Google Sheet and display it on the frontend.
-
-6. **Displaying Recent Actions Log:**
-   - Use Shets API to retrieve recent log entries from your Google Sheet.
-   - Send this data back to the frontend and display it dynamically using JavaScript.
+To do:
+We need to have the user input modify the google sheet
+We need to track the hours that the user was clocked in for and add that to the hours in the google sheet
