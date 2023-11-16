@@ -30,7 +30,7 @@ const client = new google.auth.JWT(
 const sheets = google.sheets({ version: 'v4', auth: client });
 app.get('/api/readsheet', async (req, res) => {
   try {
-    const range = 'employeeData!A1:D4'; // Update with your range
+    const range = 'employeeStatus!A1:D4'; // Update with your range
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: range,
@@ -59,20 +59,17 @@ app.get('/api/readsheet', async (req, res) => {
 
 app.post('/api/writesheet', async (req, res) => {
     try {
-        const { firstname, lastname, status, date, time } = req.body;
-        if(status === '1') {
-        logEntry = [[date, time, firstname, lastname, 'Clocked In']];
-        } else {
-        logEntry = [[date, time, firstname, lastname, 'Clocked Out']];
-        }
-        const range = 'employeeData!A1:D4'; // Update with your range
-        const logRange = 'log!A:D';
+        const {firstname, lastname, status, clockintime, clockouttime } = req.body;
+        const range = 'employeeStatus!A1:D4'; // Update with your range
+      const logRange = 'log!A:C';
+      const nameRange = 'log!A:B';
+      const logEntry = [[firstname, lastname, clockintime]];
         //status = Number(status);
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: spreadsheetId,
             range: range,
         });
-        console.log(firstname);
+        //console.log(firstname);
         
         const rows = response.data.values;
         //console.log(rows);
@@ -89,7 +86,7 @@ app.post('/api/writesheet', async (req, res) => {
             const user = data.find(user => user.firstName === firstname && user.lastName === lastname);
             if (user) {
                 const userIndex = data.indexOf(user);
-                const range = `employeeData!C${userIndex + 2}`;
+                const range = `employeeStatus!C${userIndex + 2}`;
                 const valueInputOption = 'USER_ENTERED';
                 const valueRangeBody = {
                     values: [[status]]
@@ -100,21 +97,65 @@ app.post('/api/writesheet', async (req, res) => {
                     valueInputOption: valueInputOption,
                     resource: valueRangeBody,
                 };
-                console.log(status)
+                //console.log(status)
                 const update = await sheets.spreadsheets.values.update(params);
-                console.log('User updated.')
-                res.send(update);
+                //console.log('User updated.')
+              res.send(update);
+              //console.log(logRange);
+              
                 const logParams = {
-                    spreadsheetId: spreadsheetId,
+                  spreadsheetId: spreadsheetId,
                     range: logRange,
                     valueInputOption: valueInputOption,
                     resource: { values: logEntry },
                 };
+              if (clockouttime == null) {
                 const logUpdate = await sheets.spreadsheets.values.append(logParams);
+                //res.send(logUpdate);
+              }
+              else {
+                //find the most recent entry for this user in the log and add the clock out time
+                const logResponse = await sheets.spreadsheets.values.get({
+                  spreadsheetId: spreadsheetId,
+                  range: nameRange,
+                });
+                const logRows = logResponse.data.values;
+                if (logRows.length) {
+                  // Extract headers
+                  const headers = logRows[0];
+                  const logData = logRows.slice(1).map(row => {
+                    let rowData = {};
+                    headers.forEach((header, index) => {
+                      rowData[header] = row[index];
+                    });
+                    //console.log(rowData);
+                    return rowData;
+                  });
+                  //console.log(firstname, lastname);
+                  const reversedIndex = logData.slice().reverse().findIndex(user => user['FIRST NAME'] === firstname && user['LAST NAME'] === lastname);
+                  const userIndex = reversedIndex !== -1 ? logData.length - 1 - reversedIndex : -1;
+                  const logRange = `log!D${userIndex+2}`;
+                  const logValueInputOption = 'USER_ENTERED';
+                  const logValueRangeBody = {
+                    values: [[clockouttime]]
+                  };
+                  const logParams = {
+                    spreadsheetId: spreadsheetId,
+                    range: logRange,
+                    valueInputOption: logValueInputOption,
+                    resource: logValueRangeBody,
+                  };
+                  const logUpdate = await sheets.spreadsheets.values.update(logParams);
+                  //res.send(logUpdate);
+                }
+              }
+                
+                
             } else {
                 console.log('User not found.');
                 res.status(404).send('User not found');
             }
+          
         } else {
             console.log('No data found.');
             res.send([]);
@@ -122,4 +163,4 @@ app.post('/api/writesheet', async (req, res) => {
     } catch (error) {
         console.error('The API returned an error: ' + error);
     }
-});
+  });
