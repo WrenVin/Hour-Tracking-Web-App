@@ -59,14 +59,20 @@ app.get('/api/readsheet', async (req, res) => {
 
 app.post('/api/writesheet', async (req, res) => {
     try {
-        const { firstname, lastname, status } = req.body;
+        const { firstname, lastname, status, date, time } = req.body;
+        if(status === '1') {
+        logEntry = [[date, time, firstname, lastname, 'Clocked In']];
+        } else {
+        logEntry = [[date, time, firstname, lastname, 'Clocked Out']];
+        }
         const range = 'employeeData!A1:D4'; // Update with your range
+        const logRange = 'log!A:D';
         //status = Number(status);
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: spreadsheetId,
             range: range,
         });
-        console.log(status);
+        console.log(firstname);
         
         const rows = response.data.values;
         //console.log(rows);
@@ -98,6 +104,13 @@ app.post('/api/writesheet', async (req, res) => {
                 const update = await sheets.spreadsheets.values.update(params);
                 console.log('User updated.')
                 res.send(update);
+                const logParams = {
+                    spreadsheetId: spreadsheetId,
+                    range: logRange,
+                    valueInputOption: valueInputOption,
+                    resource: { values: logEntry },
+                };
+                const logUpdate = await sheets.spreadsheets.values.append(logParams);
             } else {
                 console.log('User not found.');
                 res.status(404).send('User not found');

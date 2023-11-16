@@ -63,8 +63,10 @@ function updateEmployeeStatus(firstName, lastName, action) {
 document.getElementById('clockIn').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
+    now = new Date();
+    time = now.getHours() + ":" + now.getMinutes();
     //clockInOut(firstName, lastName, 'clock-in');
-    updateSheet(firstName, lastName, '1');
+    updateSheet(firstName, lastName, '1', now.toISOString().slice(0, 10), time);
     //updateEmployeeStatus(firstName, lastName, 'clocked in');
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
@@ -72,9 +74,11 @@ document.getElementById('clockIn').addEventListener('click', function () {
 });
 
 document.getElementById('clockOut').addEventListener('click', function () {
+    now = new Date();
+    time = now.getHours() + ":" + now.getMinutes();
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
-    updateSheet(firstName, lastName, '0');
+    updateSheet(firstName, lastName, '0', now.toISOString().slice(0, 10), time);
     //updateEmployeeStatus(firstName, lastName, 'clocked out');
     //clockInOut(firstName, lastName, 'clock-out');
     document.getElementById('firstName').value = '';
@@ -135,12 +139,12 @@ function displayCards(data) {
 }
 
 
-function updateSheet(firstName, lastName, status) {
+function updateSheet(firstName, lastName, status, date, time) {
     // Using a relative URL
     const url = '/api/writesheet';
 
     // Data to be sent in the POST request
-    const data = { firstname: firstName, lastname: lastName, status: status };
+    const data = { firstname: firstName, lastname: lastName, status: status, date: date, time: time };
 
     // Use Fetch API to send the POST request
     fetch(url, {
