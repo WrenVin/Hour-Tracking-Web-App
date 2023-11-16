@@ -52,6 +52,7 @@ document.getElementById('clockIn').addEventListener('click', function () {
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
     //addLogEntry('clocked in', firstName, lastName);
+    updateSheet(firstName, lastName, '1');
 });
 
 document.getElementById('clockOut').addEventListener('click', function () {
@@ -62,6 +63,7 @@ document.getElementById('clockOut').addEventListener('click', function () {
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
     //addLogEntry('clocked out', firstName, lastName);
+    updateSheet(firstName, lastName, '0');
 });
 
 fetch('/api/readsheet')
@@ -116,7 +118,28 @@ function displayCards(data) {
     });
 }
 
+function updateSheet(firstName, lastName, status) {
+    // Using a relative URL
+    const url = '/api/writesheet';
 
+    // Data to be sent in the POST request
+    const data = { firstname: firstName, lastname: lastName, status: status };
 
-
-
+    // Use Fetch API to send the POST request
+    fetch(url, {
+        method: 'POST', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.text())
+    .then(text => {
+        console.log('Sheet update response:', text);
+       //addLogEntry('update', firstName, lastName); // Example log
+    })
+    .catch(err => {
+        console.error('Error updating sheet:', err);
+        //addLogEntry('error', firstName, lastName); // Log error
+    });
+}

@@ -56,3 +56,55 @@ app.get('/api/readsheet', async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+app.post('/api/writesheet', async (req, res) => {
+    try {
+        const { firstname, lastname, status } = req.body;
+        const range = 'employeeData!A1:D4'; // Update with your range
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: spreadsheetId,
+            range: range,
+        });
+        
+        const rows = response.data.values;
+        //console.log(rows);
+        if (rows.length) {
+            // Extract headers
+            const headers = rows[0];
+            const data = rows.slice(1).map(row => {
+                let rowData = {};
+                headers.forEach((header, index) => {
+                    rowData[header] = row[index];
+                });
+                return rowData;
+            });
+            const user = data.find(user => user.firstName === firstname && user.lastName === lastname);
+            if (user) {
+                const userIndex = data.indexOf(user);
+                const range = `employeeData!D${userIndex + 1}`;
+                const valueInputOption = 'RAW';
+                const valueRangeBody = {
+                    values: [[status]],
+                };
+                const params = {
+                    spreadsheetId: spreadsheetId,
+                    range: range,
+                    valueInputOption: valueInputOption,
+                    resource: valueRangeBody,
+                };
+                console.log('Updating user...')
+                const update = await sheets.spreadsheets.values.update(params);
+                console.log('User updated.')
+                res.send(update);
+            } else {
+                console.log('User not found.');
+                res.status(404).send('User not found');
+            }
+        } else {
+            console.log('No data found.');
+            res.send([]);
+        }
+    } catch (error) {
+        console.error('The API returned an error: ' + error);
+    }
+});
