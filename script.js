@@ -45,7 +45,7 @@ function updateEmployeeStatus(firstName, lastName, action) {
     fetch('/api/readsheet')
         .then(response => response.json())
         .then(data => {
-            console.log(data); // You can see the data in the browser console
+            //console.log(data); // You can see the data in the browser console
             // Now you can manipulate the DOM to display this data
             //console.log(data)
             //displayData(data);
@@ -108,7 +108,7 @@ document.getElementById('clockOut').addEventListener('click', function () {
 fetch('/api/readsheet')
   .then(response => response.json())
   .then(data => {
-    console.log(data); // You can see the data in the browser console
+    //console.log(data); // You can see the data in the browser console
       // Now you can manipulate the DOM to display this data
       //console.log(data)
       //displayData(data);
@@ -125,7 +125,7 @@ function displayCards(data) {
 
     // Iterate through each person in the data
     data.forEach(person => {
-        console.log(person);
+        //console.log(person);
         // Create card elements
         const card = document.createElement('div');
         card.className = 'card';
@@ -172,7 +172,7 @@ function updateSheet(firstName, lastName, status, clockInTime, clockOutTime) {
     })
     .then(response => response.text())
         .then(text => {
-            console.log(firstName, lastName, status);
+            //console.log(firstName, lastName, status);
             updateEmployeeStatus(firstName, lastName);
     })
     .catch(err => {

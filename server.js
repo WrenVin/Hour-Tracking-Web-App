@@ -49,7 +49,7 @@ app.get('/api/readsheet', async (req, res) => {
       });
       res.send(data);
     } else {
-      console.log('No data found.');
+      //console.log('No data found.');
       res.send([]);
     }
   } catch (error) {
@@ -152,12 +152,12 @@ app.post('/api/writesheet', async (req, res) => {
                 
                 
             } else {
-                console.log('User not found.');
+                //console.log('User not found.');
                 res.status(404).send('User not found');
             }
           
         } else {
-            console.log('No data found.');
+            //console.log('No data found.');
             res.send([]);
         }
     } catch (error) {
