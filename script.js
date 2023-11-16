@@ -48,6 +48,8 @@ document.getElementById('clockIn').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     updateEmployeeStatus(firstName, lastName, 'clocked in');
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
     //addLogEntry('clocked in', firstName, lastName);
 });
 
@@ -55,6 +57,8 @@ document.getElementById('clockOut').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     updateEmployeeStatus(firstName, lastName, 'clocked out');
+    document.getElementById('firstName').value = '';
+    document.getElementById('lastName').value = '';
     //addLogEntry('clocked out', firstName, lastName);
 });
 

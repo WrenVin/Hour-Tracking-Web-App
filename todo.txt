@@ -8,6 +8,9 @@ Your hour tracking web app is a great project idea, and you're on the right trac
    - Use JavaScript to handle user interactions, such as clicking the clock in/out buttons.
    - Implement the logic to round the time to the nearest 5 minutes in JavaScript.
 
+follow this : https://developers.google.com/sheets/api/quickstart/js to integrate google sheet with javascript
+
+
 3. **Backend Integration with Google Sheets (Google App Script):**
    - Google App Script (GAS) is a JavaScript-based language that lets you automate tasks across Google products. You can use it to link your web app to a Google Sheet.
    - GAS can be used to write functions that add, read, or modify data in your Google Sheets based on the user's actions.

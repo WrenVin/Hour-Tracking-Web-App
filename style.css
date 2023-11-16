@@ -19,6 +19,11 @@ body {
     align-self: flex-start;
 }
 
+.left-container{
+    height: 100%;
+    width: 70%;
+}
+
 
 .input {
     background: #fff;
@@ -48,10 +53,8 @@ body {
     /* Allows cards to wrap to the next line */
     align-self: flex-start;
     justify-content: flex-start;
-    width: 70%;
     /* Adjust as needed */
     padding: 10px;
-    margin-right: auto;
     /* To align with the left edge */
 }
 
