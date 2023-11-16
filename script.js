@@ -14,7 +14,7 @@ function addLogEntry(action, firstName, lastName) {
             logEntries.insertBefore(newEntry, logEntries.firstChild);
 
             // Keep only a fixed number of log entries
-            const maxEntries = 25; // Change this number to show more or less entries
+            const maxEntries = 500; // Change this number to show more or less entries
             while (logEntries.children.length > maxEntries) {
                 logEntries.removeChild(logEntries.lastChild);
             }
