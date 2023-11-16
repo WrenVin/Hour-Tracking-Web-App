@@ -61,10 +61,12 @@ app.post('/api/writesheet', async (req, res) => {
     try {
         const { firstname, lastname, status } = req.body;
         const range = 'employeeData!A1:D4'; // Update with your range
+        //status = Number(status);
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: spreadsheetId,
             range: range,
         });
+        console.log(status);
         
         const rows = response.data.values;
         //console.log(rows);
@@ -81,10 +83,10 @@ app.post('/api/writesheet', async (req, res) => {
             const user = data.find(user => user.firstName === firstname && user.lastName === lastname);
             if (user) {
                 const userIndex = data.indexOf(user);
-                const range = `employeeData!D${userIndex + 1}`;
-                const valueInputOption = 'RAW';
+                const range = `employeeData!C${userIndex + 2}`;
+                const valueInputOption = 'USER_ENTERED';
                 const valueRangeBody = {
-                    values: [[status]],
+                    values: [[status]]
                 };
                 const params = {
                     spreadsheetId: spreadsheetId,
@@ -92,7 +94,7 @@ app.post('/api/writesheet', async (req, res) => {
                     valueInputOption: valueInputOption,
                     resource: valueRangeBody,
                 };
-                console.log('Updating user...')
+                console.log(status)
                 const update = await sheets.spreadsheets.values.update(params);
                 console.log('User updated.')
                 res.send(update);
