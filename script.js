@@ -1,5 +1,23 @@
+const logEntries = document.getElementById('logEntries');
+const timeDiv = document.getElementById('time');
+const dateElement = document.createElement('h3');
+timeDiv.classList.add('date-style');
+setInterval(() => {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const date = now.getDate().toString().padStart(2, '0');
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const year = now.getFullYear();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    
+    timeDiv.textContent = `${month}/${date}/${year} ${hours}:${minutes} ${ampm}`;
+}, 1000);
+
 function addLogEntry(action, firstName, lastName) {
-            const logEntries = document.getElementById('logEntries');
             const newEntry = document.createElement('div');
             newEntry.classList.add('log-entry');
     if (action === 'error') {
@@ -162,3 +180,5 @@ function updateSheet(firstName, lastName, status, clockInTime, clockOutTime) {
         //addLogEntry('error', firstName, lastName); // Log error
     });
 }
+
+
