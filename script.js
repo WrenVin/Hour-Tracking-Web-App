@@ -62,3 +62,31 @@ document.getElementById('clockOut').addEventListener('click', function () {
     //addLogEntry('clocked out', firstName, lastName);
 });
 
+fetch('/api/readsheet')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // You can see the data in the browser console
+      // Now you can manipulate the DOM to display this data
+      //console.log(data)
+    displayData(data);
+  })
+  .catch(error => console.error('Error:', error));
+
+function displayData(data) {
+  // Assuming data.values is an array of rows
+  const sheetData = data.values;
+  // Example: Display data in a table
+  const table = document.createElement('table');
+  sheetData.forEach(row => {
+    const tr = document.createElement('tr');
+    row.forEach(cell => {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      tr.appendChild(td);
+    });
+    table.appendChild(tr);
+  });
+  document.body.appendChild(table); // Append the table to the body or any other element
+}
+
+
