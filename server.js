@@ -4,7 +4,7 @@ const cors = require('cors');
 //onst apiKey = process.env.API_KEY;
 const email = process.env.EMAIL;
 const spreadsheetId = process.env.SHEET_ID;
-const apiKey = process.env.API_KEY.replace(/\\n/g, "\n");
+const apiKey = require('./key.json');
 const app = express();
 const port = 3000;
 // Serve static files from a specific folder
@@ -20,7 +20,7 @@ const { google } = require('googleapis');
 const client = new google.auth.JWT(
   email,
   null,
-  apiKey,
+  apiKey.private_key,
   ['https://www.googleapis.com/auth/spreadsheets']
 );
 const sheets = google.sheets({ version: 'v4', auth: client });
