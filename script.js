@@ -50,6 +50,7 @@ function updateEmployeeStatus(firstName, lastName, action) {
                         }
                     });
                 }
+                //hours.innerHTML = `Total Hours: <span class="hours">${person.totalHours}</span>`;
             });
             if (!userFound) {
                         addLogEntry('error', `User not found: ${firstName} ${lastName}`);
@@ -125,13 +126,10 @@ function displayCards(data) {
         }
         //status.innerHTML = `Status: <span class="status">${person.status}</span>`;
 
-        const hours = document.createElement('p');
-        hours.innerHTML = `Total Hours: <span class="hours">${person.totalHours}</span>`;
-
         // Append elements to card
         card.appendChild(name);
         card.appendChild(status);
-        card.appendChild(hours);
+        //card.appendChild(hours);
 
         // Append card to the container
         cardsContainer.appendChild(card);
