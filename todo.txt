@@ -1,7 +1,9 @@
 Current state of program: 
 The frontend UI is complete for now
 We are successfully able to pull names and data from google sheets and create cards for each person
+Tracking time is complete and interaction with Google Sheet is complete
+Google sheet visualizations are complete
 
 To do:
-We need to have the user input modify the google sheet
-We need to track the hours that the user was clocked in for and add that to the hours in the google sheet
+Create restrictions for edge cases, such as trying to clock in while already clocked in
+Have the cards refresh the time when the button is pressed
