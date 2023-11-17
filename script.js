@@ -108,7 +108,7 @@ document.getElementById('clockOut').addEventListener('click', function () {
 fetch('/api/readsheet')
   .then(response => response.json())
   .then(data => {
-    //console.log(data); // You can see the data in the browser console
+    console.log(data); // You can see the data in the browser console
       // Now you can manipulate the DOM to display this data
       //console.log(data)
       //displayData(data);

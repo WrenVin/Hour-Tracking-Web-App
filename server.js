@@ -30,7 +30,7 @@ const client = new google.auth.JWT(
 const sheets = google.sheets({ version: 'v4', auth: client });
 app.get('/api/readsheet', async (req, res) => {
   try {
-    const range = 'employeeStatus!A1:D4'; // Update with your range
+    const range = 'employeeStatus!A:C'; // Update with your range
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: spreadsheetId,
       range: range,
@@ -38,6 +38,7 @@ app.get('/api/readsheet', async (req, res) => {
 
     const rows = response.data.values;
     if (rows.length) {
+      console.log(rows.length);
       // Extract headers
       const headers = rows[0];
       const data = rows.slice(1).map(row => {
@@ -60,7 +61,7 @@ app.get('/api/readsheet', async (req, res) => {
 app.post('/api/writesheet', async (req, res) => {
     try {
         const {firstname, lastname, status, clockintime, clockouttime } = req.body;
-        const range = 'employeeStatus!A1:D4'; // Update with your range
+        const range = 'employeeStatus!A:D'; // Update with your range
       const logRange = 'log!A:C';
       const nameRange = 'log!A:B';
       const logEntry = [[firstname, lastname, clockintime]];
