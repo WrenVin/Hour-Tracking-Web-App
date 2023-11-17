@@ -1,4 +1,14 @@
 /* style.css */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -67,6 +77,7 @@ body {
     width: calc(31%);
     /* Adjust the width as needed */
     box-sizing: border-box;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 h1,
@@ -91,24 +102,28 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
     background-color: #0056b3;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.03);
+    cursor: pointer;
 }
 
 button:active {
-    background-color: #0056b3;
-    box-shadow: 0 2px #666;
-    transform: translateY(2px);
-    transform: translateX(2px);
+    transform: scale(1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
+
 
 .log-entry {
     border-bottom: 2px solid #eee;
     padding: 8px;
     color: #666;
     margin: 2px;
+    animation: fadeIn 1s;
 }
 .clocked-in {
     background-color: rgb(28, 239, 28);
@@ -136,4 +151,31 @@ button:active {
     color: #000000;
     margin: 0;
     text-align: center;
+}
+
+.card:hover {
+    /* Example styles */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.card:active {
+    transform: scale(1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+input:focus{
+    transform: scale(1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
+}
+
+card:hover {
+    /* Example styles */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.fade-in {
+    animation: fadeIn 1.5ss;
 }

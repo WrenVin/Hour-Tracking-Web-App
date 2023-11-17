@@ -142,6 +142,7 @@ function displayCards(data) {
             card.classList.remove('clocked-in');
             status.innerHTML = `<span class="status">Clocked Out</span>`;
         }
+        card.classList.add('fade-in');
         //status.innerHTML = `Status: <span class="status">${person.status}</span>`;
 
         // Append elements to card
@@ -151,6 +152,11 @@ function displayCards(data) {
 
         // Append card to the container
         cardsContainer.appendChild(card);
+
+        card.addEventListener('click', () => {
+            document.getElementById('firstName').value = person.firstName;
+            document.getElementById('lastName').value = person.lastName;
+        });
     });
 }
 
