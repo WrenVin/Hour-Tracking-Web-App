@@ -24,8 +24,16 @@ function addLogEntry(action, firstName, lastName) {
         newEntry.textContent = 'Error: User not found';
         newEntry.style.color = 'red';
     }
+    else if (action === 'clocked-in') {
+        newEntry.textContent = `Error: ${firstName} ${lastName} already clocked in`;
+        newEntry.style.color = 'red';
+    }
+    else if (action === 'clocked-out') {
+        newEntry.textContent = `Error: ${firstName} ${lastName} already clocked out`;
+        newEntry.style.color = 'red';
+    }
     else {
-        newEntry.textContent = `${new Date().toLocaleString()} - ${firstName} ${lastName} ${action}`;
+        newEntry.textContent = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${firstName} ${lastName} ${action}`;
     }
 
             // Prepend the new entry to the log
@@ -38,7 +46,7 @@ function addLogEntry(action, firstName, lastName) {
             }
 }
         
-function updateEmployeeStatus(firstName, lastName, action) {
+function updateEmployeeStatus(firstName, lastName) {
     //get sheet to update card
     userFound = false;
     const cards = document.querySelectorAll('.card');
@@ -161,30 +169,78 @@ function displayCards(data) {
 }
 
 
-function updateSheet(firstName, lastName, status, clockInTime, clockOutTime) {
+async function updateSheet(firstName, lastName, status, clockInTime, clockOutTime) {
     // Using a relative URL
     const url = '/api/writesheet';
 
     // Data to be sent in the POST request
     const data = { firstname: firstName, lastname: lastName, status: status, clockintime: clockInTime, clockouttime: clockOutTime };
-
-    // Use Fetch API to send the POST request
-    fetch(url, {
-        method: 'POST', 
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.text())
-        .then(text => {
-            //console.log(firstName, lastName, status);
-            updateEmployeeStatus(firstName, lastName);
-    })
-    .catch(err => {
-        console.error('Error updating sheet:', err);
-        //addLogEntry('error', firstName, lastName); // Log error
-    });
+    //check if user is clocking in, if they are already clocked in
+    // log the input values
+    let repeat = false;
+    if (status == '1') {
+        try {
+            const response = await fetch('/api/readsheet');
+            const data = await response.json();
+            console.log(data); // You can see the data in the browser console
+            // Now you can manipulate the DOM to display this data
+            for (let person of data) {
+                if (person.firstName === firstName && person.lastName === lastName) {
+                    if (person.status === '1') {
+                        addLogEntry('clocked-in', firstName, lastName);
+                        document.getElementById('firstName').value = '';
+                        document.getElementById('lastName').value = '';
+                        repeat = true;
+                        break;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+     else if (status == '0') {
+        try {
+            const response = await fetch('/api/readsheet');
+            const data = await response.json();
+            console.log(data); // You can see the data in the browser console
+            // Now you can manipulate the DOM to display this data
+            for (let person of data) {
+                if (person.firstName === firstName && person.lastName === lastName) {
+                    if (person.status === '0') {
+                        addLogEntry('clocked-out', firstName, lastName);
+                        document.getElementById('firstName').value = '';
+                        document.getElementById('lastName').value = '';
+                        repeat = true;
+                        break;
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    
+    if (!repeat) {
+        //console.log("HERE");
+        // Use Fetch API to send the POST request
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.text())
+            .then(text => {
+                //console.log(firstName, lastName, status);
+                updateEmployeeStatus(firstName, lastName);
+            })
+            .catch(err => {
+                console.error('Error updating sheet:', err);
+                //addLogEntry('error', firstName, lastName); // Log error
+            });
+    }
 }
 
 
