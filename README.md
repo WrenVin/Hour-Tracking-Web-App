@@ -5,6 +5,8 @@
 
 The Hour Tracking System is an intuitive web application designed to track and manage employee work hours. This system allows employees to clock in and out, while also providing a visual indication of their current status.
 
+<https://youtu.be/OHfY-uhLNr4>
+
 ## Features
 
 ### Real-time Clock Display
