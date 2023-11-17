@@ -1,9 +1,3 @@
 Current state of program: 
-The frontend UI is complete for now
-We are successfully able to pull names and data from google sheets and create cards for each person
-Tracking time is complete and interaction with Google Sheet is complete
-Google sheet visualizations are complete
-
-To do:
-Create restrictions for edge cases, such as trying to clock in while already clocked in
-Have the cards refresh the time when the button is pressed
+Complete! V1.0
+*/
