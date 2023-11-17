@@ -40,6 +40,7 @@ Before installing the application, ensure you have Node.js installed on your sys
    - Create a new project or select an existing one.
    - Navigate to "IAM & Admin" > "Service Accounts" and create a new service account.
    - Assign a role that has permissions to access Google Sheets (e.g., Editor).
+   - Download the json file containing the keys for your service account. Rename it to key.json and place in the main directory
    - Create a key for the service account in JSON format and download it. This file contains the credentials needed for your application.
 
 2. **Enable Google Sheets API**:
@@ -53,13 +54,13 @@ Before installing the application, ensure you have Node.js installed on your sys
 
 ### Creating a .env File
 Create a `.env` file in the root directory of your project and include the following:
-- `GOOGLE_SERVICE_ACCOUNT_EMAIL=your_service_account_email`
-- `GOOGLE_SHEET_ID=your_sheet_id`
+- `EMAIL=your_service_account_email`
+- `SHEET_ID=your_sheet_id`
 
 To find your Google Sheet ID:
 - Open your Google Sheet in a web browser.
 - Look at the URL; it will be in the format `https://docs.google.com/spreadsheets/d/[SHEET_ID]/edit`.
-- Copy the `[SHEET_ID]` part. This is your Google Sheet ID.
+- Copy the `[SHEET_ID]` part. This is your Google Sheet ID, which you will place in the .env
 
 ### Clone the Repository
 - Use `git clone [repository URL]` to clone the project repository.
