@@ -1,14 +1,20 @@
 /* style.css */
+
+/* Keyframe Animations */
 @keyframes fadeIn {
+
+/* Style for from */
     from {
         opacity: 0;
     }
 
+/* Style for to */
     to {
         opacity: 1;
     }
 }
 
+/* Style for body */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -21,6 +27,7 @@ body {
     /* Align items to the right */
 }
 
+/* Style for .right-container */
 .right-container {
     display: flex;
     flex-grow: 1;
@@ -29,12 +36,13 @@ body {
     align-self: flex-start;
 }
 
+/* Style for .left-container */
 .left-container{
     height: 100%;
     width: 70%;
 }
 
-
+/* Style for .input */
 .input {
     background: #fff;
     padding: 20px;
@@ -43,6 +51,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Style for .log */
 .log {
     background: #fff;
     padding: 20px;
@@ -57,6 +66,7 @@ body {
     /* Space between container and log */
 }
 
+/* Style for .employee-cards */
 .employee-cards {
     display: flex;
     flex-wrap: wrap;
@@ -68,6 +78,7 @@ body {
     /* To align with the left edge */
 }
 
+/* Style for .card */
 .card {
     background: #fff;
     padding: 15px;
@@ -79,14 +90,16 @@ body {
     box-sizing: border-box;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-
 h1,
+
+/* Style for h2 */
 h2 {
     color: #333;
     text-align: center;
 }
-
 input,
+
+/* Style for button */
 button {
     width: calc(100% - 24px);
     /* Adjusted for padding */
@@ -97,6 +110,7 @@ button {
     box-sizing: border-box;
 }
 
+/* Style for button */
 button {
     background-color: #007bff;
     color: white;
@@ -105,6 +119,7 @@ button {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Style for button:hover */
 button:hover {
     background-color: #0056b3;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
@@ -112,12 +127,13 @@ button:hover {
     cursor: pointer;
 }
 
+/* Style for button:active */
 button:active {
     transform: scale(1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
 
-
+/* Style for .log-entry */
 .log-entry {
     border-bottom: 2px solid #eee;
     padding: 8px;
@@ -125,27 +141,33 @@ button:active {
     margin: 2px;
     animation: fadeIn 1s;
 }
+
+/* Style for .clocked-in */
 .clocked-in {
     background-color: rgb(28, 239, 28);
     /* You can choose a different color if you prefer */
 }
-
 @media screen and (max-width: 768px) {
+
+/* Style for body */
     body {
         align-items: center;
     }
-
     .container,
+
+/* Style for .log */
     .log {
         width: 80%;
     }
 
+/* Style for .log */
     .log {
         flex-grow: 0;
         /* Reset flex-grow for smaller screens */
     }
 }
 
+/* Style for .date-style */
 .date-style {
     font-size: 17px;
     color: #000000;
@@ -153,22 +175,27 @@ button:active {
     text-align: center;
 }
 
+/* Style for .card:hover */
 .card:hover {
     /* Example styles */
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
     cursor: pointer;
 }
+
+/* Style for .card:active */
 .card:active {
     transform: scale(1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Style for input:focus */
 input:focus{
     transform: scale(1);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* Style for card:hover */
 card:hover {
     /* Example styles */
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
@@ -176,6 +203,7 @@ card:hover {
     cursor: pointer;
 }
 
+/* Style for .fade-in */
 .fade-in {
     animation: fadeIn 1.5ss;
 }

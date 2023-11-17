@@ -17,6 +17,7 @@ setInterval(() => {
     timeDiv.textContent = `${month}/${date}/${year} ${hours}:${minutes} ${ampm}`;
 }, 1000);
 
+
 function addLogEntry(action, firstName, lastName) {
             const newEntry = document.createElement('div');
             newEntry.classList.add('log-entry');
@@ -36,27 +37,21 @@ function addLogEntry(action, firstName, lastName) {
         newEntry.textContent = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${firstName} ${lastName} ${action}`;
     }
 
-            // Prepend the new entry to the log
             logEntries.insertBefore(newEntry, logEntries.firstChild);
 
-            // Keep only a fixed number of log entries
             const maxEntries = 500; // Change this number to show more or less entries
             while (logEntries.children.length > maxEntries) {
                 logEntries.removeChild(logEntries.lastChild);
             }
 }
-        
+
+
 function updateEmployeeStatus(firstName, lastName) {
-    //get sheet to update card
     userFound = false;
     const cards = document.querySelectorAll('.card');
     fetch('/api/readsheet')
         .then(response => response.json())
         .then(data => {
-            //console.log(data); // You can see the data in the browser console
-            // Now you can manipulate the DOM to display this data
-            //console.log(data)
-            //displayData(data);
             data.forEach(person => {
                 if (person.firstName === firstName && person.lastName === lastName) {
                     cards.forEach(card => {
@@ -76,7 +71,6 @@ function updateEmployeeStatus(firstName, lastName) {
                         }
                     });
                 }
-                //hours.innerHTML = `Total Hours: <span class="hours">${person.totalHours}</span>`;
             });
             if (!userFound) {
                         addLogEntry('error', `User not found: ${firstName} ${lastName}`);
@@ -92,12 +86,9 @@ document.getElementById('clockIn').addEventListener('click', function () {
     const lastName = document.getElementById('lastName').value;
     now = new Date();
     time = now.getHours() + ":" + now.getMinutes();
-    //clockInOut(firstName, lastName, 'clock-in');
     updateSheet(firstName, lastName, '1', new Date().toLocaleString(), null);
-    //updateEmployeeStatus(firstName, lastName, 'clocked in');
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
-    //addLogEntry('clocked in', firstName, lastName);
 });
 
 document.getElementById('clockOut').addEventListener('click', function () {
@@ -106,35 +97,25 @@ document.getElementById('clockOut').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
     updateSheet(firstName, lastName, '0', null, new Date().toLocaleString());
-    //updateEmployeeStatus(firstName, lastName, 'clocked out');
-    //clockInOut(firstName, lastName, 'clock-out');
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
-    //addLogEntry('clocked out', firstName, lastName);
 });
 
 fetch('/api/readsheet')
   .then(response => response.json())
   .then(data => {
-    console.log(data); // You can see the data in the browser console
-      // Now you can manipulate the DOM to display this data
-      //console.log(data)
-      //displayData(data);
+    console.log(data);
       displayCards(data);
   })
   .catch(error => console.error('Error:', error));
 
+
 function displayCards(data) {
-    // Get the container where cards will be added
     const cardsContainer = document.querySelector('.employee-cards');
 
-    // Clear any existing content
     cardsContainer.innerHTML = '';
 
-    // Iterate through each person in the data
     data.forEach(person => {
-        //console.log(person);
-        // Create card elements
         const card = document.createElement('div');
         card.className = 'card';
 
@@ -151,14 +132,10 @@ function displayCards(data) {
             status.innerHTML = `<span class="status">Clocked Out</span>`;
         }
         card.classList.add('fade-in');
-        //status.innerHTML = `Status: <span class="status">${person.status}</span>`;
 
-        // Append elements to card
         card.appendChild(name);
         card.appendChild(status);
-        //card.appendChild(hours);
 
-        // Append card to the container
         cardsContainer.appendChild(card);
 
         card.addEventListener('click', () => {
@@ -170,20 +147,15 @@ function displayCards(data) {
 
 
 async function updateSheet(firstName, lastName, status, clockInTime, clockOutTime) {
-    // Using a relative URL
     const url = '/api/writesheet';
 
-    // Data to be sent in the POST request
     const data = { firstname: firstName, lastname: lastName, status: status, clockintime: clockInTime, clockouttime: clockOutTime };
-    //check if user is clocking in, if they are already clocked in
-    // log the input values
     let repeat = false;
     if (status == '1') {
         try {
             const response = await fetch('/api/readsheet');
             const data = await response.json();
             console.log(data); // You can see the data in the browser console
-            // Now you can manipulate the DOM to display this data
             for (let person of data) {
                 if (person.firstName === firstName && person.lastName === lastName) {
                     if (person.status === '1') {
@@ -204,7 +176,6 @@ async function updateSheet(firstName, lastName, status, clockInTime, clockOutTim
             const response = await fetch('/api/readsheet');
             const data = await response.json();
             console.log(data); // You can see the data in the browser console
-            // Now you can manipulate the DOM to display this data
             for (let person of data) {
                 if (person.firstName === firstName && person.lastName === lastName) {
                     if (person.status === '0') {
@@ -222,8 +193,6 @@ async function updateSheet(firstName, lastName, status, clockInTime, clockOutTim
     }
     
     if (!repeat) {
-        //console.log("HERE");
-        // Use Fetch API to send the POST request
         fetch(url, {
             method: 'POST',
             headers: {
@@ -233,14 +202,13 @@ async function updateSheet(firstName, lastName, status, clockInTime, clockOutTim
         })
             .then(response => response.text())
             .then(text => {
-                //console.log(firstName, lastName, status);
                 updateEmployeeStatus(firstName, lastName);
             })
             .catch(err => {
                 console.error('Error updating sheet:', err);
-                //addLogEntry('error', firstName, lastName); // Log error
             });
     }
 }
+
 
 
