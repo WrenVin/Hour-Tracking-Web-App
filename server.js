@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const nodemailer = require('nodemailer');
+const open = require('open');
 const cors = require('cors');
 const email = process.env.EMAIL;
 const spreadsheetId = process.env.SHEET_ID;
@@ -14,7 +15,10 @@ app.use(cors());
 app.use(express.static('.'));
 app.use(express.json());
 
-app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
+app.listen(port, () => {
+    console.log(`Server listening on http://localhost:${port}`);
+    open(`http://localhost:${port}`);
+});
 const { google } = require('googleapis');
 
 

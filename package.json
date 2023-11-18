@@ -13,6 +13,7 @@
     "express": "^4.18.2",
     "googleapis": "^128.0.0",
     "localtunnel": "^2.0.2",
-    "nodemailer": "^6.9.7"
+    "nodemailer": "^6.9.7",
+    "open": "^7.0.4"
   }
 }
