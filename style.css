@@ -68,6 +68,18 @@ body {
     /* Space between container and log */
 }
 
+.log:hover{
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.input:hover {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.01);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
 /* Style for .employee-cards */
 .employee-cards {
     display: flex;
