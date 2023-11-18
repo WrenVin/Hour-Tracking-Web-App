@@ -1,12 +1,14 @@
 const express = require('express');
 require('dotenv').config();
-
+const nodemailer = require('nodemailer');
 const cors = require('cors');
 const email = process.env.EMAIL;
 const spreadsheetId = process.env.SHEET_ID;
 const apiKey = require('./key.json');
 const app = express();
 const port = 3000;
+const app_password = process.env.APP_PASSWORD;
+const personal_email = process.env.PERSONAL_EMAIL;
 
 app.use(cors());
 app.use(express.static('.'));
@@ -23,6 +25,33 @@ const client = new google.auth.JWT(
   ['https://www.googleapis.com/auth/spreadsheets']
 );
 const sheets = google.sheets({ version: 'v4', auth: client });
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: personal_email, // Your email
+      pass: app_password,
+
+    }
+});
+
+function sendEmail(to, subject, text) {
+    let mailOptions = {
+        from: personal_email, // Sender address
+        to: to,                        // List of recipients
+        subject: subject,              // Subject line
+      text: text,
+      priority: 'high'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log('Error sending email: ' + error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
 
 
 app.get('/api/readsheet', async (req, res) => {
@@ -51,6 +80,40 @@ app.get('/api/readsheet', async (req, res) => {
   } catch (error) {
     res.status(500).send(error);
   }
+});
+
+app.post('/clockIn', async (req, res) => {
+    const { firstName, lastName, hours, minutes } = req.body;
+
+    // Fetch user's email and status from Google Sheets
+    const response = await sheets.spreadsheets.values.get({
+        spreadsheetId: spreadsheetId,
+        range: 'employeeStatus!A:E', // Assuming emails are in column D and status in column E
+    });
+
+    const rows = response.data.values;
+    const userRow = rows.find(row => row[0] === firstName && row[1] === lastName);
+    if (!userRow) {
+        return res.status(404).send({ message: 'User not found' });
+    }
+
+    const userEmail = userRow[3]; // Assuming email is in the 4th column
+    const userStatus = userRow[2]; // Assuming status is in the 5th column
+
+    // Check if user is already clocked in
+    if (userStatus === '1') {
+        return res.status(400).send({ message: 'User already clocked in' });
+    }
+
+    // Calculate clock-out time
+    const clockOutTime = new Date();
+    clockOutTime.setHours(clockOutTime.getHours() + parseInt(hours));
+    clockOutTime.setMinutes(clockOutTime.getMinutes() + parseInt(minutes));
+    const formattedTime = clockOutTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    // Send email
+    sendEmail(userEmail, 'Your Clock Out Time', `You should clock out at ${formattedTime}`);
+    res.send({ message: 'Clock in registered, email sent.' });
 });
 
 

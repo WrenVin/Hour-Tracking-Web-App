@@ -84,11 +84,22 @@ function updateEmployeeStatus(firstName, lastName) {
 document.getElementById('clockIn').addEventListener('click', function () {
     const firstName = document.getElementById('firstName').value;
     const lastName = document.getElementById('lastName').value;
+    var hours = document.getElementById('hours').value;
+    var minutes = document.getElementById('minutes').value;
+    fetch('/clockIn', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstName, lastName, hours, minutes })
+    })
     now = new Date();
     time = now.getHours() + ":" + now.getMinutes();
     updateSheet(firstName, lastName, '1', new Date().toLocaleString(), null);
     document.getElementById('firstName').value = '';
     document.getElementById('lastName').value = '';
+    document.getElementById('hours').value = '0';
+    document.getElementById('minutes').value = '0';
 });
 
 document.getElementById('clockOut').addEventListener('click', function () {
