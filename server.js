@@ -40,7 +40,7 @@ function sendEmail(to, subject, text) {
         from: personal_email, // Sender address
         to: to,                        // List of recipients
         subject: subject,              // Subject line
-      text: text,
+      html: `<p style="font-size:20px;">You should clock out at <b style="color:red;">${text}</b></p>`,
       priority: 'high'
     };
 
@@ -111,8 +111,11 @@ app.post('/clockIn', async (req, res) => {
     clockOutTime.setMinutes(clockOutTime.getMinutes() + parseInt(minutes));
     const formattedTime = clockOutTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // Send email
-    sendEmail(userEmail, 'Your Clock Out Time', `You should clock out at ${formattedTime}`);
+  // Send email
+  const currentDate = new Date().toLocaleDateString();
+
+// Send email
+    sendEmail(userEmail, `Your Clock Out Time for ${currentDate}`, `${formattedTime}`);
     res.send({ message: 'Clock in registered, email sent.' });
 });
 
