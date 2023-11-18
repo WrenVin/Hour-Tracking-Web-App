@@ -47,6 +47,7 @@ body {
     background: #fff;
     padding: 20px;
     margin: 20px;
+    margin-left: 0;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -61,6 +62,7 @@ body {
     /* Fill remaining vertical space */
     overflow-y: auto;
     margin: 20px;
+    margin-left: 0;
     margin-top: 0;
     /* Scrollbar for overflow */
     /* Space between container and log */
@@ -85,7 +87,8 @@ body {
     margin: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: calc(31%);
+    /* Width is 1/4 of the container */
+    width: calc(25% - 20px);
     /* Adjust the width as needed */
     box-sizing: border-box;
     transition: transform 0.2s, box-shadow 0.2s;
